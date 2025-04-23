@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -10,6 +11,10 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import IntroToDataScience from "./pages/modules/IntroToDataScience";
 import TextAnalysis from "./pages/modules/TextAnalysis";
+import DataManipulation from "./pages/modules/DataManipulation";
+import LargeScaleData from "./pages/modules/LargeScaleData";
+import DataStreams from "./pages/modules/DataStreams";
+import AdvancedAnalysis from "./pages/modules/AdvancedAnalysis";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -39,12 +44,10 @@ const App = () => (
           {/* Module detail pages */}
           <Route path="/modules/intro-to-data-science" element={<IntroToDataScience />} />
           <Route path="/modules/text-analysis" element={<TextAnalysis />} />
-          
-          {/* ADD OTHER MODULE ROUTES HERE */}
-          {/* Route path="/modules/large-scale-data" element={<LargeScaleData />} */}
-          {/* Route path="/modules/data-manipulation" element={<DataManipulation />} */}
-          {/* Route path="/modules/data-streams" element={<DataStreams />} */}
-          {/* Route path="/modules/advanced-analysis" element={<AdvancedAnalysis />} */}
+          <Route path="/modules/data-manipulation" element={<DataManipulation />} />
+          <Route path="/modules/large-scale-data" element={<LargeScaleData />} />
+          <Route path="/modules/data-streams" element={<DataStreams />} />
+          <Route path="/modules/advanced-analysis" element={<AdvancedAnalysis />} />
           
           {/* Catch-all route for 404 */}
           <Route path="*" element={<NotFound />} />
