@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { HeroSection } from "@/components/ui/hero-section";
@@ -90,6 +89,21 @@ const Index = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Data Science Playground Section */}
+      <section className="py-20 animate-fade-in">
+        <div className="container max-w-3xl flex flex-col gap-8 items-center">
+          <h1 className="text-5xl font-extrabold bg-gradient-to-br from-primary to-purple-500 bg-clip-text text-transparent mb-2">
+            Data Science Playground
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-xl mb-3">
+            Explore, analyze, and visualize your own datasets with interactive modules. Upload a CSV and dive into clustering, sentiment, streaming, and more!
+          </p>
+          <Button asChild size="lg" variant="default">
+            <a href="/playground">Try Data Science Playground</a>
+          </Button>
         </div>
       </section>
     </Layout>

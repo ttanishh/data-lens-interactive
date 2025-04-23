@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -19,6 +18,7 @@ import LargeScaleData from "./pages/modules/LargeScaleData";
 import DataStreams from "./pages/modules/DataStreams";
 import AdvancedAnalysis from "./pages/modules/AdvancedAnalysis";
 import { ModuleDashboard } from "./components/modules/ModuleDashboard";
+import Playground from "./pages/Playground";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -79,6 +79,7 @@ const App = () => (
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/playground" element={<Playground />} />
           <Route path="/modules" element={<Modules />} />
           <Route path="/about" element={<About />} />
           
