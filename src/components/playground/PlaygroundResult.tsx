@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { InsightCard } from "@/components/ui/insight-card";
@@ -8,15 +7,15 @@ import { cn } from "@/lib/utils";
 // Demo: Fake analysis logic just for illustration
 function analyzeSentiment(rows: any[]) {
   const texts = rows.map((r) => r.text || "").filter(Boolean);
-  const score = (Math.random() * 2 - 1).toFixed(2); // Random sentiment -1..1
+  const score = parseFloat((Math.random() * 2 - 1).toFixed(2)); // Converts to number
   const dominant = score > 0.5 ? "Joy and trust" : score < -0.5 ? "Anger and fear" : "Mixed";
   return {
     viz: (
       <div className="w-full h-40 bg-gradient-to-br from-green-100 to-green-300 flex justify-center items-center rounded-lg font-mono text-5xl text-green-700 shadow-inner animate-fade-in">
-        {Number(score) > 0 ? "😊" : Number(score) < 0 ? "😠" : "😶"}
+        {score > 0 ? "😊" : score < 0 ? "😠" : "😶"}
       </div>
     ),
-    insight: `The sentiment score is ${score}, indicating a ${Number(score) > 0.65 ? "strongly positive" : Number(score) < -0.65 ? "strongly negative" : "neutral/mixed"} tone. ${dominant} are the dominant emotions.`,
+    insight: `The sentiment score is ${score}, indicating a ${score > 0.65 ? "strongly positive" : score < -0.65 ? "strongly negative" : "neutral/mixed"} tone. ${dominant} are the dominant emotions.`,
   };
 }
 function analyzeMapReduce(rows: any[]) {
