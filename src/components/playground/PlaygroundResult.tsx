@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { InsightCard } from "@/components/ui/insight-card";
@@ -91,6 +92,25 @@ function analyzeClustering(rows: any[]) {
   };
 }
 
+// Define the nextSteps object with recommendations for each module
+const nextSteps: Record<string, string[]> = {
+  sentiment: [
+    "Try filtering by specific time periods to identify sentiment trends",
+    "Segment data by demographic factors to find group-specific patterns",
+    "Apply more advanced NLP techniques for emotion detection"
+  ],
+  stream: [
+    "Experiment with different MapReduce algorithms for your data",
+    "Consider implementing real-time processing for streaming data",
+    "Try aggregating results by different dimensions"
+  ],
+  clustering: [
+    "Experiment with different numbers of clusters to find optimal groupings",
+    "Analyze the characteristics of each cluster to understand differences",
+    "Try different distance metrics to see how clusters change"
+  ]
+};
+
 const modules: Record<string, { label: string; analyze: (rows: any[]) => { viz: JSX.Element; insight: string } }> = {
   sentiment: {
     label: "Sentiment Analysis",
@@ -124,7 +144,7 @@ export function PlaygroundResult({ moduleKey, rows, onRestart }: PlaygroundResul
         description: "Your data has been processed successfully.",
       });
     }, 1400);
-  }, [moduleKey, rows]);
+  }, [moduleKey, rows, toast]);
 
   const module = modules[moduleKey];
   const { viz, insight } = module?.analyze(rows) || { viz: null, insight: "" };
