@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -97,6 +98,8 @@
 
   body {
     @apply bg-background text-foreground font-inter antialiased;
+    background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.03), transparent 40%),
+                      radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.03), transparent 30%);
   }
 }
 
@@ -120,6 +123,26 @@
   .glass-panel {
     @apply bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 dark:border-white/10 shadow-lg;
   }
+  
+  .futuristic-card {
+    @apply relative overflow-hidden rounded-xl border-none bg-gradient-to-br from-slate-900/50 to-slate-800/50 backdrop-blur-xl shadow-xl;
+  }
+  
+  .futuristic-card::before {
+    @apply content-[''] absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-50;
+  }
+  
+  .futuristic-card::after {
+    @apply content-[''] absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-30 blur-sm;
+  }
+  
+  .glow {
+    @apply relative;
+  }
+  
+  .glow::after {
+    @apply content-[''] absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20 blur-lg z-0;
+  }
 }
 
 @layer utilities {
@@ -129,5 +152,33 @@
   
   .font-poppins {
     font-family: 'Poppins', sans-serif;
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 10px rgba(79, 70, 229, 0.5);
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  .neo-gradient {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%);
   }
 }
