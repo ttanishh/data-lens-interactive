@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { InsightCard } from "@/components/ui/insight-card";
@@ -92,7 +91,57 @@ function analyzeClustering(rows: any[]) {
   };
 }
 
-// Define the nextSteps object with recommendations for each module
+const realWorldExamples: Record<string, {
+  title: string;
+  description: string;
+  mockData: any;
+  insights: string[];
+}> = {
+  sentiment: {
+    title: "Customer Experience Intelligence",
+    description: "Analysis of customer feedback from social media and support tickets",
+    mockData: [
+      { date: "Jan", positive: 65, negative: 35 },
+      { date: "Feb", positive: 70, negative: 30 },
+      { date: "Mar", positive: 55, negative: 45 },
+      { date: "Apr", positive: 80, negative: 20 },
+    ],
+    insights: [
+      "Customer satisfaction increased by 15% after product updates",
+      "Response times under 2 hours led to 30% more positive reviews",
+      "Common pain points: account setup (40%), payment issues (25%)"
+    ]
+  },
+  stream: {
+    title: "Predictive Maintenance System",
+    description: "Real-time monitoring of industrial equipment performance",
+    mockData: [
+      { component: "Motors", normal: 85, warning: 12, critical: 3 },
+      { component: "Pumps", normal: 90, warning: 8, critical: 2 },
+      { component: "Valves", normal: 78, warning: 15, critical: 7 },
+    ],
+    insights: [
+      "Early detection reduced downtime by 27%",
+      "Predictive maintenance saved $145K in Q1 2025",
+      "Average equipment lifespan extended by 2.3 years"
+    ]
+  },
+  clustering: {
+    title: "Healthcare Resource Optimization",
+    description: "Patient admission patterns and resource allocation",
+    mockData: [
+      { department: "Emergency", high: 45, medium: 35, low: 20 },
+      { department: "Surgery", high: 30, medium: 50, low: 20 },
+      { department: "Pediatrics", high: 25, medium: 45, low: 30 },
+    ],
+    insights: [
+      "Optimal staff scheduling reduced wait times by 35%",
+      "Resource allocation improved bed utilization by 28%",
+      "Peak admission times identified: 8-10 AM, 2-4 PM"
+    ]
+  }
+};
+
 const nextSteps: Record<string, string[]> = {
   sentiment: [
     "Try filtering by specific time periods to identify sentiment trends",
@@ -148,6 +197,7 @@ export function PlaygroundResult({ moduleKey, rows, onRestart }: PlaygroundResul
 
   const module = modules[moduleKey];
   const { viz, insight } = module?.analyze(rows) || { viz: null, insight: "" };
+  const example = realWorldExamples[moduleKey];
 
   const handleDownload = () => {
     const blob = new Blob([JSON.stringify({ insight, timestamp: new Date().toISOString() }, null, 2)], { type: "application/json" });
@@ -172,6 +222,45 @@ export function PlaygroundResult({ moduleKey, rows, onRestart }: PlaygroundResul
       "shadow-lg p-6 w-full flex flex-col items-center gap-7 animate-scale-in"
     )}>
       <div className="text-lg font-bold text-primary">{module?.label} Results</div>
+      
+      {example && (
+        <div className="w-full p-6 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 rounded-xl border border-blue-100 mb-4">
+          <h3 className="text-xl font-semibold text-blue-800 mb-2">{example.title}</h3>
+          <p className="text-sm text-muted-foreground mb-4">{example.description}</p>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-sm font-medium mb-2">Real-world Impact</h4>
+              <ul className="space-y-2 text-sm">
+                {example.insights.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Check className="h-4 w-4 text-green-500 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-sm font-medium mb-2">Sample Metrics</h4>
+              {moduleKey === 'sentiment' ? (
+                <SimpleLineChart 
+                  data={example.mockData} 
+                  dataKey="positive"
+                  stroke="#22c55e"
+                />
+              ) : (
+                <SimpleBarChart 
+                  data={example.mockData} 
+                  dataKey="normal" 
+                  fill="#3b82f6"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="my-2 w-full">{viz}</div>
       <InsightCard>{insight}</InsightCard>
       
@@ -181,7 +270,7 @@ export function PlaygroundResult({ moduleKey, rows, onRestart }: PlaygroundResul
             <Check className="text-green-500" /> Report Card
           </div>
           <ol className="ml-7 list-decimal space-y-1 text-[15px] text-muted-foreground">
-            {nextSteps[moduleKey].map((tip) => (
+            {nextSteps[moduleKey]?.map((tip) => (
               <li key={tip}>{tip}</li>
             ))}
           </ol>
